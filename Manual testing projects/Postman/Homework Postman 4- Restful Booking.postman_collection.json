@@ -1,0 +1,550 @@
+{
+	"info": {
+		"_postman_id": "a0a199ba-b606-4115-b06d-252b390359d1",
+		"name": "Homework Postman 4- Restful Booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32306763"
+	},
+	"item": [
+		{
+			"name": "Authorization - Create token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"var jsonData = pm.response.json()\r",
+							"pm.environment.set(\"Token\", jsonData.token)\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"admin\",\r\n    \"password\" : \"password123\"\r\n}"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/auth",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"var jsonData = pm.response.json()\r",
+							"\r",
+							"var imeNaKorisnik = pm.collectionVariables.get('firstName');\r",
+							"var prezimeNaKorisnik = pm.collectionVariables.get('lastName');\r",
+							"var krajnaCena = pm.collectionVariables.get('totalprice');\r",
+							"var dopolnitelniPotrebi = pm.collectionVariables.get('additionalneeds');\r",
+							"\r",
+							"pm.collectionVariables.set(\"BookingId\", jsonData.bookingid);\r",
+							"pm.collectionVariables.set(\"firstName\", jsonData.booking.firstname);\r",
+							"pm.collectionVariables.set(\"lastName\", jsonData.booking.lastname);\r",
+							"pm.collectionVariables.set(\"totalprice\", jsonData.booking.totalprice);\r",
+							"pm.collectionVariables.set(\"additionalneeds\", jsonData.booking.additionalneeds); \r",
+							"\r",
+							"\r",
+							"pm.test('Status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify firstname', function () {\r",
+							"    pm.expect(jsonData.booking.firstname).to.eql(imeNaKorisnik);\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify lastname', function () {\r",
+							"    pm.expect(jsonData.booking.lastname).to.eql(prezimeNaKorisnik);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Verify totalprice\", function () {\r",
+							"    pm.expect(jsonData.booking.totalprice).to.eql(krajnaCena);\r",
+							"});\r",
+							"\r",
+							"pm.test('Verify additionalneeds', function () {\r",
+							"    pm.expect(jsonData.booking.additionalneeds).to.eql(dopolnitelniPotrebi);\r",
+							"})\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"firstname\" : \"{{firstName}}\",\n  \"lastname\" : \"{{lastName}}\",\n  \"totalprice\" : {{totalprice}},\n  \"depositpaid\" : true,\n  \"additionalneeds\" : \"{{additionalneeds}}\",\n  \"bookingdates\" : {\n    \"checkin\" : \"2013-02-23\",\n    \"checkout\" : \"2014-10-23\"\n  }\n}\n"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Booking by ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"var imeNaKorisnik = pm.collectionVariables.get(\"firstName\")\r",
+							"var prezimeNaKorisnik = pm.collectionVariables.get(\"lastName\")\r",
+							"var krajnaCena = pm.collectionVariables.get(\"totalprice\")\r",
+							"var dopolnitelniPotrebi = pm.collectionVariables.get(\"additionalneeds\") \r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify FirstName\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.firstname).to.eql(imeNaKorisnik);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify LastName\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.lastname).to.eql(prezimeNaKorisnik);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify TotalPrice\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.totalprice).to.eql(krajnaCena);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify Additional Needs\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.additionalneeds).to.eql(dopolnitelniPotrebi);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking/{{BookingId}}",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking",
+						"{{BookingId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Booking IDs - additional needs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Additional needs\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.additionalneeds).to.eql(pm.collectionVariables.unset(\"variable_key\"));\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"pm.collectionVariables.get(\"BookingID\");\r",
+							"\r",
+							"pm.collectionVariables.set(\"BookingID\", jsonData.bookingid);\r",
+							"pm.collectionVariables.set(\"firstName\", jsonData.firstname);\r",
+							"pm.collectionVariables.set(\"lastName\", jsonData.lastname);\r",
+							"pm.collectionVariables.set(\"totalprice\", jsonData.totalprice);\r",
+							"pm.collectionVariables.set(\"additionalneeds\", jsonData.additionalneeds);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check updated firstname of Booking\", function () {\r",
+							"    pm.expect(jsonData.firstname).to.exist;\r",
+							"    console.log(jsonData.firstname);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check updated lastName of Booking\", function () {\r",
+							"    pm.expect(jsonData.lastname).to.exist;\r",
+							"    console.log(jsonData.lastname);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check updated totalprice of Booking\", function () {\r",
+							"    pm.expect(jsonData.totalprice).to.exist;\r",
+							"    console.log(jsonData.totalprice);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check updated additionalNeeds of Booking\", function () {\r",
+							"    pm.expect(jsonData.additionalneeds).to.exist;\r",
+							"    console.log(jsonData.additionalneeds);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token={{Token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\" : \"Gerry\",\n    \"lastname\" : \"Goop\",\n    \"totalprice\" : 111,\n    \"depositpaid\" : true,\n    \"bookingdates\" : {\n        \"checkin\" : \"2018-01-01\",\n        \"checkout\" : \"2019-01-01\"\n    },\n    \"additionalneeds\" : \"Lunch\"\n}"
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking/{{BookingId}}",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking",
+						"{{BookingId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Booking by ID from PUT",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Change First Name is Gerry\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.firstname).to.eql(\"Gerry\");\r",
+							"    });\r",
+							"\r",
+							"pm.test(\"Change LastName is Goop\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.lastname).to.eql(\"Goop\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify TotalPrice\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.totalprice).to.eql(111);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify additionalNeeds\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.additionalneeds).to.eql(\"Lunch\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking/{{BookingId}}",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking",
+						"{{BookingId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Booking",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Cookie",
+						"value": "token = {{Token}}"
+					}
+				],
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking/{{BookingId}}",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking",
+						"{{BookingId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET - Test for status code 404",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password123",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking/{{BookingId}}",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking",
+						"{{BookingId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "BookingId",
+			"value": ""
+		},
+		{
+			"key": "firstName",
+			"value": ""
+		},
+		{
+			"key": "lastName",
+			"value": ""
+		},
+		{
+			"key": "totalprice",
+			"value": ""
+		},
+		{
+			"key": "additionalneeds",
+			"value": ""
+		},
+		{
+			"key": "BookingID",
+			"value": ""
+		}
+	]
+}

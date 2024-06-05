@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="IntelliJ - projects">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/first-project-g1.zip!/" />
+      <root url="jar://$PROJECT_DIR$/testNg-selenium-g1.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,123 @@
+{
+	"info": {
+		"_postman_id": "3ce99a8c-e2ab-4f81-bc5f-5f128efd8ded",
+		"name": "Data Driven Testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32306763"
+	},
+	"item": [
+		{
+			"name": "Create User with Data Driven",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"\r",
+							"var imeOdData = pm.iterationData.get(\"Name\")\r",
+							"var rabotaOdData = pm.iterationData.get(\"Job\")\r",
+							"\r",
+							"pm.collectionVariables.set(\"Name\", imeOdData)\r",
+							"\r",
+							"pm.collectionVariables.set(\"Job\", rabotaOdData)\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"var imeOdData = pm.iterationData.get(\"Name\")\r",
+							"var rabotaOdData = pm.iterationData.get(\"Job\")\r",
+							"\r",
+							"pm.test('Status code is 201', function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Your Name\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.name).to.eql(imeOdData);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Your Job\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.job).to.eql(rabotaOdData);\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\r\n{\r\n    \"name\": \"{{Name}}\",\r\n    \"job\": \"{{Job}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "userName",
+			"value": ""
+		},
+		{
+			"key": "userJob",
+			"value": ""
+		},
+		{
+			"key": "Name",
+			"value": ""
+		},
+		{
+			"key": "Job",
+			"value": ""
+		}
+	]
+}

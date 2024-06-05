@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "6a8eb812-a5b7-4fa6-82ce-f6a983fa8a5c",
+		"name": "ExtraHomework - Access to Petstore Orders - Store Section",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32306763"
+	},
+	"item": [
+		{
+			"name": "Place an order for a pet",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 8,\r\n  \"petId\": 15,\r\n  \"quantity\": 5,\r\n  \"shipDate\": \"2024-01-16T21:57:42.698Z\",\r\n  \"status\": \"placed\",\r\n  \"complete\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{petstoreUrl}}/store/order",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"store",
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find purchase order by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Pet Id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.petId).to.eql(15);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Quantity\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.quantity).to.eql(5);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Ship Date\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.shipDate).to.eql(\"2024-01-16T21:57:42.698+0000\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.status).to.eql(\"placed\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Complete\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.complete).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 400ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(400);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petstoreUrl}}/store/order/{{OrderId}}",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"store",
+						"order",
+						"{{OrderId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete purchase order by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{petstoreUrl}}/store/order/{{OrderId}}",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"store",
+						"order",
+						"{{OrderId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Status code - no order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petstoreUrl}}/store/order/{{OrderId}}",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"store",
+						"order",
+						"{{OrderId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Return pet inventories by status",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 or 201\", function () {\r",
+							"    pm.response.to.have.status(200, 201);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status code is not 400 or 404\", function () {\r",
+							"    pm.response.to.not.have.status(400, 404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petstoreUrl}}/store/inventory",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"store",
+						"inventory"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "OrderId",
+			"value": "8",
+			"type": "string"
+		}
+	]
+}

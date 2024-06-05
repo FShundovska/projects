@@ -1,0 +1,139 @@
+{
+	"info": {
+		"_postman_id": "873d2afb-7bdf-47ca-95af-3af203d59c28",
+		"name": "HomeworkWorkSpace",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32306763"
+	},
+	"item": [
+		{
+			"name": "Get User by User Name",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 127,\r\n  \"username\": \"Fani.Shundovska\",\r\n  \"firstName\": \"Fani\",\r\n  \"lastName\": \"Shundovska\",\r\n  \"email\": \"fani.sundovska@gmail.com\",\r\n  \"password\": \"Password123@\",\r\n  \"phone\": \"phonenumber\",\r\n  \"userStatus\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get User by User Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://petstore.swagger.io/v2/user/Fani.Shundovska",
+					"protocol": "https",
+					"host": [
+						"petstore",
+						"swagger",
+						"io"
+					],
+					"path": [
+						"v2",
+						"user",
+						"Fani.Shundovska"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Updated User",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n      \"id\": 127,\r\n  \"username\": \"{{myUserName}}\",\r\n  \"firstName\": \"Fani\",\r\n  \"lastName\": \"{{lastName}}\",\r\n  \"email\": \"{{email}}\",\r\n  \"password\": \"Password123@\",\r\n  \"phone\": \"{{phone}}\",\r\n  \"userStatus\": {{userStatus}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{petstoreUrl}}/user/{{myUserName}}",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"user",
+						"{{myUserName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{petstoreUrl}}/user/{{myUserName}}",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"user",
+						"{{myUserName}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "myUserName",
+			"value": "Fani.Shundovska",
+			"type": "string"
+		},
+		{
+			"key": "lastName",
+			"value": "Shundovska",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,31 @@
+SELECT Country,COUNT(CompanyName) AS Company
+FROM customers
+WHERE Region IS NOT NULL AND Fax IS NOT NULL AND CustomerID LIKE 'a%' OR CustomerID LIKE 'b%' OR CustomerID LIKE 'ca%'
+GROUP BY Country
+HAVING Country NOT IN ('Argentina','Germany','Spain') and Country NOT LIKE 'U_%'
+ORDER BY Company; 
+
+
+
+2023.09.18 17:55:00
+
+SELECT CURDATE(); 
+SELECT YEAR (CURDATE());
+SELECT MONTH (CURDATE());
+SELECT DAY (CURDATE());
+
+SELECT YEAR ('2023.09.18 17:55:00');
+SELECT MONTH ('2023.09.18 17:55:00');
+SELECT DAY ('2023.09.18 17:55:00');
+
+SELECT DATE('2023.09.18 17:55:00');
+SELECT TIME('2023.09.18 17:55:00');
+SELECT datediff('2023.09.18 17:55:00', '2023.09.08 17:55:00');
+
+select DATE_ADD('2023.09.18 17:55:00',INTERVAL 1 YEAR) Year_after; 
+
+
+
+SELECT COUNT(*)
+FROM orders
+WHERE DATE(OrderDate)='1995-11-13';

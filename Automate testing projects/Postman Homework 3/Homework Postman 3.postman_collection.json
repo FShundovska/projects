@@ -1,0 +1,326 @@
+{
+	"info": {
+		"_postman_id": "b23c0d3b-663a-46f1-bc77-581d2d3998a5",
+		"name": "Homework Postman 3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32306763"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content-Type is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Successful POST request\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"id\": 127,\r\n  \"username\": \"Doggie\",\r\n  \"firstName\": \"Doggo\",\r\n  \"lastName\": \"Dog\",\r\n  \"email\": \"Doggo@mail.com\",\r\n  \"password\": \"Doggo@\",\r\n  \"phone\": \"phoneNumber\",\r\n  \"userStatus\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{petstoreUrl}}/user",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users - Check the Values",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check User Id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(127);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check Users Username\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.username).to.eql(\"Doggie\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check Users Firstname\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Doggo\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check Users Lastname\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Dog\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify Email address\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.email).to.eql(\"Doggo@mail.com\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify Password\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.password).to.eql(\"Doggo@\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify Users Phone Number\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.phone).to.eql(\"phoneNumber\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petstoreUrl}}/user/{{userName}}",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"user",
+						"{{userName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Updated User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 127,\r\n    \"username\": \"{{userName}}\",\r\n    \"firstName\": \"Boggo\",\r\n    \"lastName\": \"Bog\",\r\n    \"email\": \"Boggo@mail.com\",\r\n    \"password\": \"Boggo@\",\r\n    \"phone\": \"phoneNumber\",\r\n    \"userStatus\": {{userStatus}}\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{petstoreUrl}}/user/{{userName}}",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"user",
+						"{{userName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User - Check Updated Values",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check User Id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.id).to.eql(127);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check Users Username\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.username).to.eql(\"Doggie\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check Users Firstname\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Boggo\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check Users Lastname\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"Bog\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify Email address\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.email).to.eql(\"Boggo@mail.com\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify Password\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.password).to.eql(\"Boggo@\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify Users Phone Number\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.phone).to.eql(\"phoneNumber\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petstoreUrl}}/user/{{userName}}",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"user",
+						"{{userName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{petstoreUrl}}/user/{{userName}}",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"user",
+						"{{userName}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ensure User is Deleted",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{petstoreUrl}}/user/{{userName}}",
+					"host": [
+						"{{petstoreUrl}}"
+					],
+					"path": [
+						"user",
+						"{{userName}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "userName",
+			"value": "Boggie",
+			"type": "string"
+		}
+	]
+}

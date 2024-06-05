@@ -1,0 +1,40 @@
+{
+  "id": 3,
+  "category": {
+    "id": 60,
+    "name": "Reyes"
+  },
+  "name": "buffalo",
+  "photoUrls": [
+    "www.hilton-aufderhar.biz",
+    "www.hilton-testtest.com"
+  ],
+  "tags": [
+    {
+      "id": 3,
+      "name": "Dorthey"
+    },
+    {
+      "id": 8,
+      "name": "Bono"
+    },
+    {
+      "id": 12,
+      "name": "Timmo",
+      "otherTags":
+      [
+          {
+              "tag1": "Pedigree",
+              "goldenMedal":true
+          }
+      ]
+    }
+  ],
+  "status": 
+  [
+      "available",
+      "pending",
+      "sold"
+  ]
+ 
+}
